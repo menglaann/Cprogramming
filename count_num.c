@@ -22,7 +22,7 @@ int count(char * file){
 		return -1;
 	}
 	
-	while(!feof(fp)){
+	/*while(!feof(fp)){
 		if(feof(fp))break;
 		c=fgetc(fp);
 		if(c==' '){
@@ -33,11 +33,22 @@ int count(char * file){
 		}
 		//printf("%c",c);
 
+	}*/
+	
+	while(!feof(fp)){
+		c=fgetc(fp);
+		if(c>='a'&&c<='z'||c>='A'&&c<='Z'){
+			c=fgetc(fp);
+			while(c>='a'&&c<='z'||c>='A'&&c<='Z'){
+				c=fgetc(fp);
+			}
+			num++;
+		}
 	}
 	fclose(fp);
 	//char mytext[20];
 	//fgets(mytext,20,fp);
 	//printf("%s\n",mytext);
 	//fclose(fp);
-	return num+1;
+	return num;
 }
