@@ -9,6 +9,35 @@ typedef struct structCharHash{
 	struct structCharHash * next;
 }charHash;
 static charHash charHashTable[HASHNUMBER];
+void deleteWord(char *pword){
+	printf("pword:%s\n",pword);
+	char * lword=pword;
+	int hashNum=calcWordHash(lword);
+	charHash p=charHashTable[hashNum];
+	if(p.word==NULL){
+		printf("word do not exist\n");
+		return;
+	}
+	charHash *ppre=&charHashTable[hashNum];
+	charHash *pcur=ppre;
+	while(pcur!=NULL){
+		if(strcmp(pcur->word,pword)==0){
+			for(;p.next==pcur;){
+				break;
+			}
+			p.next=pcur->next;
+			free(ppre);
+			ppre=NULL;
+			//printf("this word  is %s ,and the number is %d\n",pcur->word,pcur->number);
+			printf("delete succeed");			
+			return;
+		}
+		//printf("this word  is %s ,and the number is %d\n",pcur->word,pcur->number);
+		pcur=pcur->next;
+		ppre=pcur;
+	}
+	printf("no such word");
+}
 void insertWord(char * pword){
 	printf("pword:%s\n",pword);
 	char * lword=pword;
@@ -17,7 +46,9 @@ void insertWord(char * pword){
 
 	if(p.word==NULL){
 		charHash pc;
-		pc.word=pword;
+		//pc.word=pword;
+		pc.word=(char*)malloc(strlen(pword)+1);
+		strcpy(pc.word,pword);
 		//printf("pc.word:%s\n",pc.word);
 		pc.number=1;
 		pc.next=NULL;
@@ -63,6 +94,7 @@ int main(){
 	printf("file name:%s\n",file);
 	int num=count_num(file);
 	printf("\n%d\n",num);
+	deleteWord("is");
 	int i=0;
 	for (;i<HASHNUMBER;i++){
 		charHash *pch = &charHashTable[i];			
