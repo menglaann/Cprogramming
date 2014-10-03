@@ -19,22 +19,20 @@ void deleteWord(char *pword){
 		return;
 	}
 	charHash *ppre=&charHashTable[hashNum];
-	charHash *pcur=ppre;
+	charHash *pcur=ppre->next;
 	while(pcur!=NULL){
 		if(strcmp(pcur->word,pword)==0){
-			for(;p.next==pcur;){
-				break;
-			}
-			p.next=pcur->next;
-			free(ppre);
-			ppre=NULL;
+			
+			ppre->next=pcur->next;
+			free(pcur);
+			pcur=NULL;
 			//printf("this word  is %s ,and the number is %d\n",pcur->word,pcur->number);
 			printf("delete succeed");			
 			return;
 		}
 		//printf("this word  is %s ,and the number is %d\n",pcur->word,pcur->number);
 		pcur=pcur->next;
-		ppre=pcur;
+		ppre=ppre->next;
 	}
 	printf("no such word");
 }
@@ -68,7 +66,7 @@ void insertWord(char * pword){
 		pcur=pcur->next;
 		ppre=pcur;
 	}
-	
+
 	if(strcmp(pcur->word,pword)==0){
 		pcur->number+=1;
 		return;
