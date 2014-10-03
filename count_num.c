@@ -58,7 +58,7 @@ void insertWord(char * pword){
 	}
 	charHash *ppre=&charHashTable[hashNum];
 	charHash *pcur=ppre;
-	while(pcur!=NULL){
+	while(pcur->next!=NULL){
 		if(strcmp(pcur->word,pword)==0){
 			pcur->number+=1;
 			//printf("this word  is %s ,and the number is %d\n",pcur->word,pcur->number);
@@ -68,8 +68,16 @@ void insertWord(char * pword){
 		pcur=pcur->next;
 		ppre=pcur;
 	}
+	
+	if(strcmp(pcur->word,pword)==0){
+		pcur->number+=1;
+		return;
+	}
 	charHash * pnewWord=(charHash *)malloc(sizeof(charHash));
 	ppre->next=pnewWord;
+	pnewWord->word=pword;
+	pnewWord->number=1;
+	pnewWord->next=NULL;
 }
 
 int calcWordHash(char *pword){
